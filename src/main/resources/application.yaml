@@ -1,0 +1,4 @@
+yandex:
+  translate:
+    apikey: ${YANDEX_API_KEY}
+    uri: https://translate.api.cloud.yandex.net/translate/v2/translate

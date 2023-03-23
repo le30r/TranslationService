@@ -1,7 +1,7 @@
 package xyz.le30r.tinkoff.translate.dto.yandex
 
 data class YandexResponseDto(
-    val text: Array<String>
+    val translations: Array<YandexTextDto>
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -9,12 +9,12 @@ data class YandexResponseDto(
 
         other as YandexResponseDto
 
-        if (!text.contentEquals(other.text)) return false
+        if (!translations.contentEquals(other.translations)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return text.contentHashCode()
+        return translations.contentHashCode()
     }
 }
