@@ -1,4 +1,4 @@
-package xyz.le30r.tinkoff.translate.rest.controller.advice
+package xyz.le30r.tinkoff.translate.rest.advice
 
 
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR

@@ -11,5 +11,4 @@ import java.net.URI
 
 @Configuration
 class TranslateConfiguration {
-
 }
