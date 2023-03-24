@@ -15,7 +15,7 @@ import java.net.URI
 @Service
 class YandexTranslationService : TranslationService {
 
-    val restClient: RestTemplate = RestTemplate()
+    var restClient: RestTemplate = RestTemplate()
 
     @Value("\${yandex.translate.apikey}")
     lateinit var apiKey: String
