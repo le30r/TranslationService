@@ -1,30 +1,20 @@
 package xyz.le30r.tinkoff.translate.service
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.RestTemplate
 import xyz.le30r.tinkoff.translate.dto.TranslateRequestDto
 import xyz.le30r.tinkoff.translate.dto.TranslateResponseDto
 import xyz.le30r.tinkoff.translate.dto.yandex.YandexRequestDto
 import xyz.le30r.tinkoff.translate.dto.yandex.YandexResponseDto
-import java.net.URI
+import xyz.le30r.tinkoff.translate.service.client.RestClient
 
 @Service
 class YandexTranslationService : TranslationService {
 
-    var restClient: RestTemplate = RestTemplate()
-
-    @Value("\${yandex.translate.apikey}")
-    lateinit var apiKey: String
-
-    @Value("\${yandex.translate.uri}")
-    lateinit var uri: String
+    @Autowired
+    lateinit var client: RestClient<YandexRequestDto, YandexResponseDto>
 
     override fun translate(input: TranslateRequestDto): TranslateResponseDto {
-        val headers = HttpHeaders()
         val request: YandexRequestDto
         with(input) {
             request = YandexRequestDto(
@@ -33,14 +23,7 @@ class YandexTranslationService : TranslationService {
                 params.sourceLang
             )
         }
-        headers.add("Authorization", "Api-Key $apiKey")
-        val yandexResponse = restClient.postForEntity(
-            URI(uri),
-            HttpEntity<YandexRequestDto>(request, headers),
-            YandexResponseDto::class.java
-        )
-        val body = yandexResponse.body ?: throw HttpClientErrorException(yandexResponse.statusCode);
-
+        val body = client.executePostRequest(request)
         return TranslateResponseDto(body.translations.joinToString(" ") { it.text })
     }
 }
