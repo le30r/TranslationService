@@ -5,6 +5,5 @@ data class TranslationRequest(
     val input: String,
     val output: String,
     val timestamp: Long,
-    val parameters: Map<String, String>,
     val ipAddress: String
 )
