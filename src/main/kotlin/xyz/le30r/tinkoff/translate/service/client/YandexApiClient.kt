@@ -11,7 +11,7 @@ import xyz.le30r.tinkoff.translate.dto.yandex.YandexResponseDto
 import java.net.URI
 
 @Service
-class YandexRestClient : RestClient<YandexRequestDto, YandexResponseDto> {
+class YandexApiClient : ApiClient<YandexRequestDto, YandexResponseDto> {
 
     var restClient: RestTemplate = RestTemplate()
 
@@ -31,7 +31,5 @@ class YandexRestClient : RestClient<YandexRequestDto, YandexResponseDto> {
         )
 
         return yandexResponse.body ?: throw HttpClientErrorException(yandexResponse.statusCode);
-
-
     }
 }
