@@ -1,15 +1,21 @@
-# Используем базовый образ Maven
-FROM maven:3.6.3-jdk-8-openj9 AS build
-COPY . /app
-WORKDIR /app
-RUN mvn clean package
+FROM eclipse-temurin:17-jdk-alpine as build
+WORKDIR /workspace/app
 
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
 
-FROM openjdk:8-jdk-alpine
+RUN ./mvnw install
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
 
-WORKDIR /app
-COPY --from=build /app/target/my-app.jar /app
+ARG DEPENDENCY=/workspace/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+ARG YANDEX_API_KEY
 EXPOSE 8080
-
-CMD ["java", "-jar", "my-app.jar"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","xyz.le30r.tinkoff.translate.TranslateApplicationKt"]
