@@ -74,7 +74,7 @@ class DatabaseServiceImpl : DatabaseService {
         val request = TranslationRequest(
             0,
             requestDto.data,
-            result.joinToString { it ?: "" },
+            result.joinToString(" ") { it ?: "" },
             Timestamp.valueOf(LocalDateTime.now()).time,
             ipAddress
         )
