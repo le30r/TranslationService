@@ -11,11 +11,10 @@ import xyz.le30r.tinkoff.translate.service.client.ApiClient
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
-import java.util.concurrent.FutureTask
-import java.util.concurrent.TimeUnit
 
 
-const val THREADS_COUNT = 20
+const val THREADS_COUNT = 10
+
 @Service
 class YandexTranslationService : TranslationService {
 
@@ -27,7 +26,7 @@ class YandexTranslationService : TranslationService {
 
     override fun translate(input: TranslationRequestDto, ipAddress: String): TranslationResponseDto {
         val words = getWords(input)
-            val result = translateParallel(words.toList(), input.params.sourceLang, input.params.targetLang)
+        val result = translateParallel(words.toList(), input.params.sourceLang, input.params.targetLang)
         dbService.saveRequestInfoInDb(input, words, ipAddress, result.toTypedArray())
         return TranslationResponseDto(result.joinToString(" "))
     }
@@ -40,7 +39,7 @@ class YandexTranslationService : TranslationService {
         val futures = arrayListOf<Future<YandexResponseDto>>()
 
         for (part in parts) {
-            val request = YandexRequestDto(part.toTypedArray(), targetLang,sourceLang)
+            val request = YandexRequestDto(part.toTypedArray(), targetLang, sourceLang)
             futures.add(executorService.submit(Callable {
                 client.executePostRequest(request)
             }))
@@ -50,12 +49,12 @@ class YandexTranslationService : TranslationService {
         val translatedWords = arrayListOf<String>()
         for (future in futures) {
             val response = future.get()
-            translatedWords.addAll(response.translations.map {it.text ?: "" })
+            translatedWords.addAll(response.translations.map { it.text ?: "" })
         }
         return translatedWords
     }
 
     private fun getWords(input: TranslationRequestDto): Array<String> {
-       return input.data.split(Regex("\\s+")).toTypedArray()
+        return input.data.split(Regex("\\s+")).toTypedArray()
     }
 }
