@@ -25,6 +25,9 @@ internal class YandexTranslationServiceTest {
     @Mock
     lateinit var yandexApiClient: YandexApiClient
 
+    @Mock
+    lateinit var dbService: DatabaseService
+
     @InjectMocks
     lateinit var service: YandexTranslationService
 
@@ -44,7 +47,7 @@ internal class YandexTranslationServiceTest {
     fun translateSimpleWord() {
         val expectResponse = TranslationResponseDto("тест")
         val request = TranslationRequestDto("test", TranslationParamsDto("en", "ru"))
-        val response = service.translate(request)
+        val response = service.translate(request, "0.0.0.0:8888")
 
         assertEquals(response, expectResponse)
     }
@@ -53,7 +56,7 @@ internal class YandexTranslationServiceTest {
     fun translatePhrase() {
         val expectResponse = TranslationResponseDto("привет мир")
         val request = TranslationRequestDto("hello world", TranslationParamsDto("en", "ru"))
-        val response = service.translate(request)
+        val response = service.translate(request, "0.0.0.0:8888")
 
         assertEquals(response, expectResponse)
     }

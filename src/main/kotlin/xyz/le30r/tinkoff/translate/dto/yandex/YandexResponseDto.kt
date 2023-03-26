@@ -1,7 +1,7 @@
 package xyz.le30r.tinkoff.translate.dto.yandex
 
 data class YandexResponseDto(
-    val translations: Array<YandexTextDto>
+    val translations: Array<YandexTextDto>?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
