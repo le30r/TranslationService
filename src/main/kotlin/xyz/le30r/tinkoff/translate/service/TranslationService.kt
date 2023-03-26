@@ -1,8 +1,8 @@
 package xyz.le30r.tinkoff.translate.service
 
-import xyz.le30r.tinkoff.translate.dto.TranslateRequestDto
-import xyz.le30r.tinkoff.translate.dto.TranslateResponseDto
+import xyz.le30r.tinkoff.translate.dto.TranslationRequestDto
+import xyz.le30r.tinkoff.translate.dto.TranslationResponseDto
 
 interface TranslationService {
-    fun translate(input: TranslateRequestDto): TranslateResponseDto
+    fun translate(input: TranslationRequestDto, ipAddress: String): TranslationResponseDto
 }

@@ -1,6 +1,6 @@
 package xyz.le30r.tinkoff.translate.dto
 
-class TranslateParamsDto(
+class TranslationParamsDto(
     val sourceLang: String?,
     val targetLang: String
 )

@@ -1,4 +1,4 @@
-package xyz.le30r.tinkoff.translate.mapper
+package xyz.le30r.tinkoff.translate.mapper.set
 
 import java.sql.ResultSet
 

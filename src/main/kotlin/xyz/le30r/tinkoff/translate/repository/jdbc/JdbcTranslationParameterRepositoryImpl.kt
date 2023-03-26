@@ -1,12 +1,15 @@
 package xyz.le30r.tinkoff.translate.repository.jdbc
 
-import xyz.le30r.tinkoff.translate.mapper.TranslationParameterSetMapper
+import org.springframework.stereotype.Repository
+import xyz.le30r.tinkoff.translate.mapper.set.TranslationParameterSetMapper
 import xyz.le30r.tinkoff.translate.model.TranslationParameter
 import xyz.le30r.tinkoff.translate.repository.TranslationParameterRepository
 import javax.sql.DataSource
 private const val SELECT_ALL_PARAMETERS = """SELECT * FROM PARAMETER"""
 private const val INSERT_INTO_PARAMETER = """INSERT INTO PARAMETER (request_id, parameter_name, parameter_value)
                                 VALUES (?, ?, ?)"""
+
+@Repository
 class JdbcTranslationParameterRepositoryImpl(private val dataSource: DataSource) : TranslationParameterRepository {
 
     override fun save(entity: TranslationParameter) {

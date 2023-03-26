@@ -1,5 +1,5 @@
 package xyz.le30r.tinkoff.translate.dto
 
-data class TranslateResponseDto(
+data class TranslationResponseDto(
     val translationResult: String
 )

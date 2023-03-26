@@ -2,7 +2,7 @@ package xyz.le30r.tinkoff.translate.repository.jdbc
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import xyz.le30r.tinkoff.translate.mapper.TranslationRequestSetMapper
+import xyz.le30r.tinkoff.translate.mapper.set.TranslationRequestSetMapper
 import xyz.le30r.tinkoff.translate.model.TranslationRequest
 import xyz.le30r.tinkoff.translate.repository.TranslationRequestRepository
 import java.sql.SQLException

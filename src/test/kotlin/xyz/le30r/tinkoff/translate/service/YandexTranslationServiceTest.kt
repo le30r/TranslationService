@@ -5,15 +5,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentMatcher
-import org.mockito.ArgumentMatchers.any
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import xyz.le30r.tinkoff.translate.dto.TranslateParamsDto
-import xyz.le30r.tinkoff.translate.dto.TranslateRequestDto
-import xyz.le30r.tinkoff.translate.dto.TranslateResponseDto
+import xyz.le30r.tinkoff.translate.dto.TranslationParamsDto
+import xyz.le30r.tinkoff.translate.dto.TranslationRequestDto
+import xyz.le30r.tinkoff.translate.dto.TranslationResponseDto
 import xyz.le30r.tinkoff.translate.dto.yandex.YandexRequestDto
 import xyz.le30r.tinkoff.translate.dto.yandex.YandexResponseDto
 import xyz.le30r.tinkoff.translate.dto.yandex.YandexTextDto
@@ -44,8 +42,8 @@ internal class YandexTranslationServiceTest {
 
     @Test
     fun translateSimpleWord() {
-        val expectResponse = TranslateResponseDto("тест")
-        val request = TranslateRequestDto("test", TranslateParamsDto("en", "ru"))
+        val expectResponse = TranslationResponseDto("тест")
+        val request = TranslationRequestDto("test", TranslationParamsDto("en", "ru"))
         val response = service.translate(request)
 
         assertEquals(response, expectResponse)
@@ -53,8 +51,8 @@ internal class YandexTranslationServiceTest {
 
     @Test
     fun translatePhrase() {
-        val expectResponse = TranslateResponseDto("привет мир")
-        val request = TranslateRequestDto("hello world", TranslateParamsDto("en", "ru"))
+        val expectResponse = TranslationResponseDto("привет мир")
+        val request = TranslationRequestDto("hello world", TranslationParamsDto("en", "ru"))
         val response = service.translate(request)
 
         assertEquals(response, expectResponse)
