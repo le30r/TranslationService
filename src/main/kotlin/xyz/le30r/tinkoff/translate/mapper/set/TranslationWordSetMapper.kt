@@ -1,6 +1,5 @@
 package xyz.le30r.tinkoff.translate.mapper.set
 
-
 import xyz.le30r.tinkoff.translate.model.TranslationWord
 import java.sql.ResultSet
 import java.sql.SQLException

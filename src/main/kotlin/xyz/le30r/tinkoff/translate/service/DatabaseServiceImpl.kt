@@ -28,7 +28,6 @@ class DatabaseServiceImpl : DatabaseService {
     @Autowired
     lateinit var parametersRepository: TranslationParameterRepository
 
-
     override fun saveRequestInfoInDb(
         requestDto: TranslationRequestDto,
         words: Array<String>,
@@ -41,11 +40,9 @@ class DatabaseServiceImpl : DatabaseService {
             val requestId = saveRequest(requestDto, result, ipAddress)
             saveWords(words, result, requestId)
             saveParameters(requestDto, requestId)
-        }
-        catch (exception: SQLException) {
+        } catch (exception: SQLException) {
             connection.rollback()
-        }
-        finally {
+        } finally {
             connection.autoCommit = false
             connection.commit()
         }
@@ -64,9 +61,9 @@ class DatabaseServiceImpl : DatabaseService {
         result: Array<String?>,
         requestId: Long
     ) = words.forEachIndexed { i, entity ->
-            val dbEntity = TranslationWord(i.toLong(), entity, result[i] ?: "", requestId)
-            wordsRepository.save(dbEntity)
-        }
+        val dbEntity = TranslationWord(i.toLong(), entity, result[i] ?: "", requestId)
+        wordsRepository.save(dbEntity)
+    }
 
 
     private fun saveRequest(

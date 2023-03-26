@@ -15,7 +15,7 @@ import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
 
 
-const val THREADS_COUNT = 10
+const val THREADS_COUNT = 20
 @Service
 class YandexTranslationService : TranslationService {
 
@@ -27,25 +27,12 @@ class YandexTranslationService : TranslationService {
 
     override fun translate(input: TranslationRequestDto, ipAddress: String): TranslationResponseDto {
         val words = getWords(input)
-//        val result = arrayOfNulls<String>(words.size)
-//        words.forEachIndexed { i, e ->
-//            val request: YandexRequestDto = with(input) {
-//                YandexRequestDto(
-//                    arrayOf(e),
-//                    params.targetLang,
-//                    params.sourceLang
-//                )
-//            }
-//            val body = client.executePostRequest(request)
-//            result[i] = body.translations[0].text
-//        }
-
-        //dbService.saveRequestInfoInDb(input, words, ipAddress, result)
-        val result = translateParallel(words.toList(), input.params.sourceLang, input.params.targetLang)
+            val result = translateParallel(words.toList(), input.params.sourceLang, input.params.targetLang)
+        dbService.saveRequestInfoInDb(input, words, ipAddress, result.toTypedArray())
         return TranslationResponseDto(result.joinToString(" "))
     }
 
-    fun translateParallel(words: List<String>, sourceLang: String?, targetLang: String): List<String> {
+    private fun translateParallel(words: List<String>, sourceLang: String?, targetLang: String): List<String> {
         val parts = words.chunked(words.size / THREADS_COUNT + 1)
 
         val executorService = Executors.newFixedThreadPool(THREADS_COUNT)
@@ -58,13 +45,12 @@ class YandexTranslationService : TranslationService {
                 client.executePostRequest(request)
             }))
         }
-
         executorService.shutdown()
 
         val translatedWords = arrayListOf<String>()
         for (future in futures) {
             val response = future.get()
-            translatedWords.addAll(response.translations?.map {it.text} ?: emptyList())
+            translatedWords.addAll(response.translations.map {it.text ?: "" })
         }
         return translatedWords
     }
