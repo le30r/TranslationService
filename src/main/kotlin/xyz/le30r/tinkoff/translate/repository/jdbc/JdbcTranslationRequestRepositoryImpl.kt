@@ -26,7 +26,7 @@ class JdbcTranslationRequestRepositoryImpl(@Autowired var dataSource: DataSource
                 setString(4, entity.ipAddress)
             }
 
-            var id = -1L
+            var id: Long
             if (preparedStatement.executeUpdate() > 0) {
                 val rs = preparedStatement.generatedKeys
                 rs.next()

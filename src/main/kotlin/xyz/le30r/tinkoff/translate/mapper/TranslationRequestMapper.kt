@@ -5,14 +5,14 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 
-
+private const val ID_COLUMN = "id"
+private const val INPUT_COLUMN = "input"
+private const val OUTPUT_COLUMN = "output"
+private const val TIMESTAMP_COLUMN = "timestamp"
+private const val IP_COLUMN = "ip_address"
 
 class TranslationRequestMapper : SetMapper<TranslationRequest> {
-    private val ID_COLUMN = "id"
-    private val INPUT_COLUMN = "input"
-    private val OUTPUT_COLUMN = "output"
-    private val TIMESTAMP_COLUMN = "timestamp"
-    private val IP_COLUMN = "ip_address"
+
     override fun mapSet(rs: ResultSet): Set<TranslationRequest> {
         val result = mutableSetOf<TranslationRequest>()
         try {
@@ -33,6 +33,5 @@ class TranslationRequestMapper : SetMapper<TranslationRequest> {
         val ip = rs.getString(IP_COLUMN)
         return TranslationRequest(id, input, output, timestamp, ip)
     }
-
 
 }
