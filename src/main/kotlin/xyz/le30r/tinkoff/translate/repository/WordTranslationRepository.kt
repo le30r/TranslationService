@@ -1,8 +1,8 @@
 package xyz.le30r.tinkoff.translate.repository
 
-import xyz.le30r.tinkoff.translate.model.WordTranslation
+import xyz.le30r.tinkoff.translate.model.TranslationWord
 
 interface WordTranslationRepository {
-    fun save(entity: WordTranslation): Long
-    fun findAll() : Set<WordTranslation>
+    fun save(entity: TranslationWord)
+    fun findAll() : Set<TranslationWord>
 }

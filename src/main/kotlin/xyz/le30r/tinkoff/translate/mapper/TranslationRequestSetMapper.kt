@@ -11,7 +11,7 @@ private const val OUTPUT_COLUMN = "output"
 private const val TIMESTAMP_COLUMN = "timestamp"
 private const val IP_COLUMN = "ip_address"
 
-class TranslationRequestMapper : SetMapper<TranslationRequest> {
+class TranslationRequestSetMapper : SetMapper<TranslationRequest> {
 
     override fun mapSet(rs: ResultSet): Set<TranslationRequest> {
         val result = mutableSetOf<TranslationRequest>()

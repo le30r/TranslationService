@@ -1,7 +1,6 @@
 package xyz.le30r.tinkoff.translate.mapper
 
 import xyz.le30r.tinkoff.translate.model.TranslationParameter
-import xyz.le30r.tinkoff.translate.model.TranslationRequest
 import java.sql.ResultSet
 import java.sql.SQLException
 
@@ -9,7 +8,7 @@ private const val REQUEST_ID_COLUMN = "request_id"
 private const val PARAMETER_NAME_COLUMN = "parameter_name"
 private const val PARAMETER_VALUE_COLUMN = "parameter_value"
 
-class TranslationParameterMapper : SetMapper<TranslationParameter> {
+class TranslationParameterSetMapper : SetMapper<TranslationParameter> {
 
     override fun mapSet(rs: ResultSet): Set<TranslationParameter> {
         val result = mutableSetOf<TranslationParameter>()

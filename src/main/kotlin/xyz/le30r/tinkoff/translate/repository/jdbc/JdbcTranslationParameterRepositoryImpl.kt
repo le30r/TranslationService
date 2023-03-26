@@ -1,11 +1,8 @@
 package xyz.le30r.tinkoff.translate.repository.jdbc
 
-import xyz.le30r.tinkoff.translate.mapper.TranslationParameterMapper
-import xyz.le30r.tinkoff.translate.mapper.TranslationRequestMapper
+import xyz.le30r.tinkoff.translate.mapper.TranslationParameterSetMapper
 import xyz.le30r.tinkoff.translate.model.TranslationParameter
 import xyz.le30r.tinkoff.translate.repository.TranslationParameterRepository
-import java.sql.SQLException
-import java.sql.Statement
 import javax.sql.DataSource
 private const val SELECT_ALL_PARAMETERS = """SELECT * FROM PARAMETER"""
 private const val INSERT_INTO_PARAMETER = """INSERT INTO PARAMETER (request_id, parameter_name, parameter_value)
@@ -25,7 +22,7 @@ class JdbcTranslationParameterRepositoryImpl(private val dataSource: DataSource)
     }
 
     override fun findAll(): Set<TranslationParameter> {
-        val mapper = TranslationParameterMapper()
+        val mapper = TranslationParameterSetMapper()
         dataSource.connection.use {
             val preparedStatement = it.prepareStatement(SELECT_ALL_PARAMETERS)
             val rs = preparedStatement.executeQuery()

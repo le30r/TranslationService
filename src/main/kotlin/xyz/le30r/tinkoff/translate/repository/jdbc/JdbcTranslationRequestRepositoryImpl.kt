@@ -2,19 +2,20 @@ package xyz.le30r.tinkoff.translate.repository.jdbc
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import xyz.le30r.tinkoff.translate.mapper.TranslationRequestMapper
+import xyz.le30r.tinkoff.translate.mapper.TranslationRequestSetMapper
 import xyz.le30r.tinkoff.translate.model.TranslationRequest
 import xyz.le30r.tinkoff.translate.repository.TranslationRequestRepository
 import java.sql.SQLException
 import java.sql.Statement
 import javax.sql.DataSource
 
+
+private const val SELECT_ALL_REQUESTS = """SELECT * FROM REQUEST"""
+private const val INSERT_INTO_REQUEST = """INSERT INTO REQUEST (input, output, timestamp, ip_address)
+                                VALUES (?, ?, ?, ?)"""
 @Repository
 class JdbcTranslationRequestRepositoryImpl(@Autowired var dataSource: DataSource) : TranslationRequestRepository {
 
-    val SELECT_ALL_REQUESTS = """SELECT * FROM REQUEST"""
-    val INSERT_INTO_REQUEST = """INSERT INTO REQUEST (input, output, timestamp, ip_address)
-                                VALUES (?, ?, ?, ?)"""
 
     override fun save(entity: TranslationRequest): Long =
         dataSource.connection.use {
@@ -38,7 +39,7 @@ class JdbcTranslationRequestRepositoryImpl(@Autowired var dataSource: DataSource
 
 
     override fun findAll(): Set<TranslationRequest> {
-        val mapper = TranslationRequestMapper()
+        val mapper = TranslationRequestSetMapper()
         dataSource.connection.use {
             val preparedStatement = it.prepareStatement(SELECT_ALL_REQUESTS)
             val rs = preparedStatement.executeQuery()
